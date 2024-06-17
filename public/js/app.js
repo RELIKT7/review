@@ -69,7 +69,9 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
   },
   computed: {
     Reviews: function Reviews() {
-      return this.$store.getters.Reviews;
+      return this.$store.getters.Reviews.toSorted(function (a, b) {
+        return b.id - a.id;
+      });
     }
   }
 });
@@ -127,7 +129,10 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
                       case 0:
                         console.table(response.data);
                         _this.store(response.data);
-                      case 2:
+                        _this.text = null;
+                        _this.images = null;
+                        _this.$refs.file.value = null;
+                      case 5:
                       case "end":
                         return _context.stop();
                     }
@@ -168,6 +173,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: {
     sUserName: String,
+    sCreatedAt: String,
     sText: String,
     aImages: Array
   }
@@ -197,6 +203,7 @@ var render = function render() {
       key: index,
       attrs: {
         "s-user-name": review.user_name,
+        "s-created-at": review.created_at,
         "s-text": review.text,
         "a-images": review.images
       }
@@ -271,6 +278,7 @@ var render = function render() {
       }
     }
   }), _vm._v(" "), _c("input", {
+    ref: "file",
     staticClass: "d-block my-1",
     attrs: {
       type: "file",
@@ -313,11 +321,16 @@ var render = function render() {
   return _c("div", {
     staticClass: "card card-default my-1"
   }, [_c("div", {
-    staticClass: "card-header",
+    staticClass: "card-header d-flex justify-content-between"
+  }, [_c("span", {
     domProps: {
       textContent: _vm._s(_vm.sUserName)
     }
-  }), _vm._v(" "), _c("div", {
+  }), _vm._v(" "), _c("span", {
+    domProps: {
+      textContent: _vm._s(new Date(_vm.sCreatedAt).toLocaleString("ru-RU"))
+    }
+  })]), _vm._v(" "), _c("div", {
     staticClass: "card-body",
     domProps: {
       textContent: _vm._s(_vm.sText)

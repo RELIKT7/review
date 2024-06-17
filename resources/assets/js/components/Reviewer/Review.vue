@@ -1,6 +1,9 @@
 <template>
   <div class="card card-default my-1">
-    <div class="card-header" v-text="sUserName" />
+    <div class="card-header d-flex justify-content-between">
+      <span v-text="sUserName" />
+      <span v-text="new Date(sCreatedAt).toLocaleString('ru-RU')" />
+    </div>
     <div class="card-body" v-text="sText" />
     <div class="card-body">
       <img
@@ -18,6 +21,7 @@
     export default {
         props: {
             sUserName: String,
+            sCreatedAt: String,
             sText: String,
             aImages: Array,
         },

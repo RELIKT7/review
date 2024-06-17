@@ -6,6 +6,7 @@
       v-for="(review, index) in Reviews"
       :key="index"
       :s-user-name="review.user_name"
+      :s-created-at="review.created_at"
       :s-text="review.text"
       :a-images="review.images"
     />
@@ -42,7 +43,7 @@
         },
         computed: {
             Reviews() {
-                return this.$store.getters.Reviews;
+                return this.$store.getters.Reviews.toSorted((a, b) => b.id - a.id);
             }
         }
     }

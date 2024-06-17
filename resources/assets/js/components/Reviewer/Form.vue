@@ -17,10 +17,12 @@
           required
         />
         <input
+          ref="file"
           class="d-block my-1"
           type="file"
           accept="image/*"
-          multiple @change="change"
+          multiple
+          @change="change"
         >
         <input
           class="d-block float-end"
@@ -59,7 +61,11 @@
                 })
                     .then(async (response) => {
                         console.table(response.data);
-                        this.store(response.data)
+                        this.store(response.data);
+
+                        this.text = null;
+                        this.images = null;
+                        this.$refs.file.value = null;
                     })
                     .catch((error) => {
                         console.error(error)
